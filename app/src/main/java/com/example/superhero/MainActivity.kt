@@ -18,6 +18,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -73,12 +74,12 @@ fun HeroesList(
     heroes: List<Hero>,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp)) {
-    LazyColumn(){
+    LazyColumn(contentPadding = contentPadding){
         itemsIndexed(heroes){ index, hero ->
             HeroListItem(
                 hero = hero,
                 modifier = Modifier
-                    .padding(8.dp)
+                    .padding(dimensionResource(R.dimen.padding_small))
             )
         }
     }
@@ -86,11 +87,14 @@ fun HeroesList(
 
 @Composable
 fun HeroListItem(hero: Hero, modifier: Modifier = Modifier) {
-    Card() {
+    Card(
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        modifier = modifier
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(dimensionResource(R.dimen.padding_medium))
                 .sizeIn(minHeight = 72.dp)
         ) {
             HeroInformation(hero.nameRes, hero.descriptionRes)
@@ -110,12 +114,10 @@ fun HeroInformation(
         Text(
             text = stringResource(heroName),
             style = MaterialTheme.typography.displaySmall,
-            modifier = Modifier
         )
         Text(
             text = stringResource(heroDescription),
             style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier
         )
     }
 }
